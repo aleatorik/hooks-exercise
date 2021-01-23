@@ -1,16 +1,30 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
 
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let willUpdate = true;
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+
 function App() {
-  const [item, setItem] = useState(1);
-  const increment = () => setItem(item + 1);
-  const decrement = () => setItem(item - 1);
+  const maxLength = (value) => value.length <= 10;
+  const name = useInput("Mr.", maxLength);
   return (
     <div className="App">
-      <h1>This is count {item}</h1>
-      <h2>Click any button below and see what happen</h2>
-      <button onClick={increment}>increse</button>
-      <button onClick={decrement}>decrese</button>
+      <h1>hello</h1>
+      <input placeholder="Name" {...name} />
     </div>
   );
 }
