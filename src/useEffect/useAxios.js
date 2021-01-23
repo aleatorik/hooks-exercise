@@ -7,6 +7,14 @@ const useAxios = (options, axiosInstance = defaultAxios) => {
     error: null,
     data: null,
   });
+  const [trigger, setTrigger] = useState(0);
+  const refetch = () => {
+    setState({
+      ...state,
+      loading: true,
+    });
+    setTrigger(new Date());
+  };
   useEffect(() => {
     axiosInstance(options)
       .then((data) => {
@@ -19,21 +27,20 @@ const useAxios = (options, axiosInstance = defaultAxios) => {
       .catch((error) => {
         setState({ ...state, loading: false, error });
       });
-  }, []);
-  return state;
+  }, [trigger]);
+  return { ...state, refetch };
 };
 
 function App() {
-  const { loading, data, error } = useAxios({
+  const { loading, data, error, refetch } = useAxios({
     url:
       "https://cors-anywhere.herokuapp.com/https://yts.am/api/v2/list_movies.json",
   });
-  console.log(
-    `Loading: ${loading}\nError:${error}\nData:${JSON.stringify(data)}`
-  );
   return (
     <div className="App">
-      <h1>Hi</h1>
+      <h1>{data && data.status}</h1>
+      <h2>{loading && "Loading"}</h2>
+      <button onClick={refetch}>Refetch></button>
     </div>
   );
 }
