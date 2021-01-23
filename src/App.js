@@ -3,22 +3,30 @@ import React, { useState } from "react";
 const content = [
   {
     tab: "Section 1",
-    content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis tempore at voluptate nihil, aliquam est consequatur, quam quo provident illo ex in explicabo distinctio! Quam repudiandae enim tempora nulla fuga.",
+    content: "This is first content from the Section 1",
   },
   {
     tab: "Section 2",
-    content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis tempore at voluptate nihil, aliquam est consequatur, quam quo provident illo ex in explicabo distinctio! Quam repudiandae enim tempora nulla fuga.",
+    content: "This is second content from the Section 2",
   },
 ];
 
+const useTabs = (initialTab, allTabs) => {
+  const [currentIndex, setCurrentIndex] = useState(initialTab);
+  return {
+    currentItem: allTabs[currentIndex],
+    changeItem: setCurrentIndex,
+  };
+};
+
 function App() {
+  const { currentItem, changeItem } = useTabs(0, content);
   return (
     <div className="App">
-      {content.map((section) => (
-        <button>{section.tab}</button>
+      {content.map((section, index) => (
+        <button onClick={() => changeItem(index)}>{section.tab}</button>
       ))}
+      <div>{currentItem.content}</div>
     </div>
   );
 }
