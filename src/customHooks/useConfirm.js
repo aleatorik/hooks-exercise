@@ -1,14 +1,17 @@
 import React from "react";
 
-const useConfirm = (message = "", callback, rejection) => {
-  if (typeof callback !== "function") {
+const useConfirm = (message = "", onConfirm, onCancle) => {
+  if (!onConfirm || typeof onConfirm !== "function") {
+    return;
+  }
+  if (onCancle && typeof onCancle !== "function") {
     return;
   }
   const confirmAction = () => {
     if (window.confirm(message)) {
-      callback();
+      onConfirm();
     } else {
-      rejection();
+      onCancle();
     }
   };
   return confirmAction;
