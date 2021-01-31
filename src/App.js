@@ -1,10 +1,10 @@
 import React from "react";
-import Counter from "./useReducer/useReducer";
+import Info from "./useReducer/Info";
 
 function App() {
   return (
     <div className="App">
-      <Counter />
+      <Info />
     </div>
   );
 }
