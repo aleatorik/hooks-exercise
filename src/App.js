@@ -1,10 +1,10 @@
 import React from "react";
-import EventPractice from "./useState/eventPractice";
+import Counter from "./useReducer/useReducer";
 
 function App() {
   return (
     <div className="App">
-      <EventPractice />
+      <Counter />
     </div>
   );
 }
